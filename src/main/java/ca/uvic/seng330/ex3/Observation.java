@@ -6,7 +6,7 @@ import java.util.Date;
  */
 public class Observation {
 
-    private Reporter reporter;
+    private User reporter;
     private long observationId;
     private Date sightingTime;
     private Species species;
@@ -29,16 +29,16 @@ public class Observation {
      * Get Reporter of Observation
      * @return reporter - Reporter of Observation
      */
-    public Reporter getReporter() {
+    public User getReporter() {
         System.out.println("Getting Reporter");
         return null;
     }
 
     /**
      * Set Reporter of Observation
-     * @param reporter - Reporter of Observation
+     * @param User - Reporter of Observation
      */
-    public void setReporter(Reporter reporter) {
+    public void setReporter(User reporter) {
         System.out.println("Setting Reporter");
     }
 
@@ -133,7 +133,7 @@ public class Observation {
      */
     public Observation(Observation other){
         if(other != null){
-            this.reporter = new Reporter(other.reporter);
+            this.reporter = new User(other.reporter);
             this.observationId = other.observationId;
             this.sightingTime = new Date(other.sightingTime.getTime());
             this.species = other.species;
@@ -142,8 +142,8 @@ public class Observation {
         }
     }
 
-    public Observation(long id, Reporter reporter, Date time, Species species, Direction direction, String conditions){
-        this.reporter = new Reporter(reporter);
+    public Observation(long id, User reporter, Date time, Species species, Direction direction, String conditions){
+        this.reporter = new User(reporter);
         this.observationId = id;
         this.sightingTime = new Date(time.getTime());
         this.species = species;

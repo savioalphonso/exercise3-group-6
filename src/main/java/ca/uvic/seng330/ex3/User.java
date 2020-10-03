@@ -8,7 +8,7 @@ public class User {
     private String userId;
     private String name;
     private String email;
-    private Type type;
+    private Roles role;
 
     /**
      * Default constructor
@@ -17,7 +17,7 @@ public class User {
         userId = "";
         name = "";
         email = "";
-        type = null;
+        role = null;
     }
 
     /**
@@ -28,7 +28,7 @@ public class User {
         this.userId = id;
         name = "";
         email = "";
-        type = null;
+        role = null;
     }
 
     /**
@@ -75,20 +75,20 @@ public class User {
     }
 
     /**
-     * Get Type of User
-     * @return type - Type of User
+     * Get Role of User
+     * @return role - Role of User
      */
-    public Type getType() {
-        System.out.println("Getting Type");
+    public Roles getRole() {
+        System.out.println("Getting Role");
         return null;
     }
 
     /**
-     * Set Type of User
-     * @param type - Type of User
+     * Set Role of User
+     * @param role - Role of User
      */
-    public void setType(Type type) {
-        System.out.println("Setting Type");
+    public void setType(Roles role) {
+        System.out.println("Setting Role");
     }
 
     /**
@@ -100,15 +100,15 @@ public class User {
             this.userId = other.userId;
             this.name = other.name;
             this.email = other.email;
-            this.type = other.type;
+            this.role = other.role;
         }
     }
 
-    public User(String userId, String name, String email, Type type){
+    public User(String userId, String name, String email, Roles role){
         this.userId = userId;
         this.name = name;
         this.email = email;
-        this.type = type;
+        this.role = role;
     }
 
 }

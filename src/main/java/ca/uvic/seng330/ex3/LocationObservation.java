@@ -42,8 +42,8 @@ public class LocationObservation extends SimpleObservation{
         this.location = null;
     }
 
-    public LocationObservation(long id, Reporter reporter, Date time, Species species, Direction direction, String conditions, String notes, Location location){
-        super(id, reporter, time, species, direction, conditions, notes);
+    public LocationObservation(long id, User user, Date time, Species species, Direction direction, String conditions, String notes, Location location){
+        super(id, user, time, species, direction, conditions, notes);
         this.location = new Location(location);
 
         System.out.print("at a location\n");
