@@ -11,4 +11,13 @@ class AppTest {
         Driver classUnderTest = new Driver();
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
+
+    @Test void whale1IsGreater() {
+        Whale whale1 = new Whale(5, "Moby Dick", Gender.MALE, "White", Species.UNKNOWN);
+        Whale whale2 = new Whale(0, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
+
+        Whale.CompareById comparer = new Whale.CompareById();
+        int x = comparer.compare(whale1, whale2);
+        assertEquals(5, x);
+    }
 }
