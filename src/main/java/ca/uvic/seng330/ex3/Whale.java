@@ -9,7 +9,7 @@ public class Whale {
     private String color;
     private Species species;
 
-    public Whale(long id, String name, Gender gender, String color, Species species){
+    public Whale(long id, String name, Gender gender, String color, Species species) {
         this.whaleId = id;
         this.color = color;
         this.name = name;
@@ -46,15 +46,6 @@ public class Whale {
     }
 
     /**
-     * Sets whale id.
-     *
-     * @param whaleId A long id that uniquely identifies a whale
-     */
-    public void setWhaleId(long whaleId) {
-        this.whaleId = whaleId;
-    }
-
-    /**
      * Gets whale id
      *
      * @return A long id that uniquely identifies a whale
@@ -64,12 +55,12 @@ public class Whale {
     }
 
     /**
-     * Sets whale name
+     * Sets whale id.
      *
-     * @param name A string containing the whale's name
+     * @param whaleId A long id that uniquely identifies a whale
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setWhaleId(long whaleId) {
+        this.whaleId = whaleId;
     }
 
     /**
@@ -82,12 +73,12 @@ public class Whale {
     }
 
     /**
-     * Sets whale's gender
+     * Sets whale name
      *
-     * @param gender An Enum representing the whale's gender
+     * @param name A string containing the whale's name
      */
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -100,12 +91,12 @@ public class Whale {
     }
 
     /**
-     * Sets the whale's color
+     * Sets whale's gender
      *
-     * @param color A string representing whale's color
+     * @param gender An Enum representing the whale's gender
      */
-    public void setColor(String color) {
-        this.color = color;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     /**
@@ -118,12 +109,12 @@ public class Whale {
     }
 
     /**
-     * Sets the whale's species.
+     * Sets the whale's color
      *
-     * @param species An enum representing whale's species
+     * @param color A string representing whale's color
      */
-    public void setSpecies(Species species) {
-        this.species = species;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     /**
@@ -136,6 +127,15 @@ public class Whale {
     }
 
     /**
+     * Sets the whale's species.
+     *
+     * @param species An enum representing whale's species
+     */
+    public void setSpecies(Species species) {
+        this.species = species;
+    }
+
+    /**
      * Nested Comparator class for whales to compare by Id
      *
      * @param whale1, whale2 Whale's to be compared
@@ -143,7 +143,7 @@ public class Whale {
      */
     static class CompareById implements Comparator<Whale> {
         public int compare(Whale whale1, Whale whale2) {
-            return (int)(whale1.getWhaleId() - whale2.getWhaleId());
+            return (int) (whale1.getWhaleId() - whale2.getWhaleId());
         }
     }
 
