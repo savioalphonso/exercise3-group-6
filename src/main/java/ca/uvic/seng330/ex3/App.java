@@ -13,7 +13,7 @@ public class App {
     public static void main(String[] args) {
 
         Whale mobyDick = new Whale(1, "Moby Dick", Gender.MALE, "White", Species.UNKNOWN );
-        Reporter reporter = new Reporter("cap-ahab", "Captain Ahab", "cahab@seaworld.com");
+        User reporter = new User("cap-ahab", "Captain Ahab", "cahab@seaworld.com", Roles.REPORTER);
         Location newEngland = new Location(43.9654, 70.8227);
         LocationObservation mobyDickObservation =
                 new LocationObservation(0,

@@ -33,7 +33,7 @@ public class ObservationRepository implements Repository<Observation>{
      * @param reporter The desired reporter instance for any given observation
      * @return collection of observations submitted by the reporter <code>reporter</code>
      */
-    public List<Observation> getByReporter(Reporter reporter){
+    public List<Observation> getByReporter(User reporter){
         System.out.println("Getting Observations by Reporter");
         return null;
     }
