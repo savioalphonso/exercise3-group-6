@@ -1,4 +1,4 @@
-package ca.uvic.seng330.ex2;
+package ca.uvic.seng330.ex3;
 
 /**
  * Location details and associated methods
