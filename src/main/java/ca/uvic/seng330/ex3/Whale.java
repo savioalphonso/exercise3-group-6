@@ -1,11 +1,13 @@
 package ca.uvic.seng330.ex2;
+
+import java.util.Comparator;
+
 public class Whale {
     private long whaleId;
     private String name;
     private Gender gender;
     private String color;
     private Species species;
-
 
     public Whale(long id, String name, Gender gender, String color, Species species){
         this.whaleId = id;
@@ -131,5 +133,17 @@ public class Whale {
      */
     public Species getSpecies() {
         return this.species;
+    }
+
+    /**
+     * Nested Comparator class for whales
+     *
+     * @param whale1, whale2 Whale's to be compared
+     * @return int Representing how the whale's compare
+     */
+    static class CompareById implements Comparator<Whale> {
+        public int compare(Whale whale1, Whale whale2) {
+            return (int)(whale1.getWhaleId() - whale2.getWhaleId());
+        }
     }
 }
