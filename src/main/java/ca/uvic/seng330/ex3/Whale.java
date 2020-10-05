@@ -2,7 +2,7 @@ package ca.uvic.seng330.ex3;
 
 import java.util.Comparator;
 
-public class Whale {
+public class Whale implements Comparable<Whale> {
     private long whaleId;
     private String name;
     private Gender gender;
@@ -43,6 +43,11 @@ public class Whale {
             this.color = other.color;
             this.species = other.species;
         }
+    }
+
+    @Override
+    public int compareTo(Whale o) {
+        return species.compareTo(o.species);
     }
 
     /**
