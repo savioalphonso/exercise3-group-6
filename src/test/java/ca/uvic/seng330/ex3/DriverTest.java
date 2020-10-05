@@ -4,11 +4,45 @@
 package ca.uvic.seng330.ex3;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     @Test void appHasAGreeting() {
         Driver classUnderTest = new Driver();
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    }
+
+    @Test void whale1IsGreater() {
+        Whale whale1 = new Whale(5, "Moby Dick", Gender.MALE, "White", Species.UNKNOWN);
+        Whale whale2 = new Whale(0, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
+
+        Whale.CompareById comparer = new Whale.CompareById();
+        int x = comparer.compare(whale1, whale2);
+        assertEquals(5, x);
+    }
+
+    @Test void sortWhalesById() {
+        Whale whale1 = new Whale(5, "Moby Dick", Gender.MALE, "White", Species.UNKNOWN);
+        Whale whale2 = new Whale(0, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
+        Whale whale3 = new Whale(2, "Ralph", Gender.MALE, "Gray", Species.UNKNOWN);
+        Whale whale4 = new Whale(1, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
+
+        WhaleRepository whales = new WhaleRepository();
+        whales.add(whale1);
+        whales.add(whale2);
+        whales.add(whale3);
+        whales.add(whale4);
+        whales.sortById();
+
+        List<Whale> ans = new ArrayList();
+        ans.add(whale2);
+        ans.add(whale4);
+        ans.add(whale3);
+        ans.add(whale1);
+        assertEquals(ans, whales.getWhales());
     }
 }

@@ -1,13 +1,15 @@
-package ca.uvic.seng330.ex2;
-public class Whale {
+package ca.uvic.seng330.ex3;
+
+import java.util.Comparator;
+
+public class Whale implements Comparable<Whale> {
     private long whaleId;
     private String name;
     private Gender gender;
     private String color;
     private Species species;
 
-
-    public Whale(long id, String name, Gender gender, String color, Species species){
+    public Whale(long id, String name, Gender gender, String color, Species species) {
         this.whaleId = id;
         this.color = color;
         this.name = name;
@@ -43,13 +45,9 @@ public class Whale {
         }
     }
 
-    /**
-     * Sets whale id.
-     *
-     * @param whaleId A long id that uniquely identifies a whale
-     */
-    public void setWhaleId(long whaleId) {
-        this.whaleId = whaleId;
+    @Override
+    public int compareTo(Whale o) {
+        return species.compareTo(o.species);
     }
 
     /**
@@ -62,12 +60,12 @@ public class Whale {
     }
 
     /**
-     * Sets whale name
+     * Sets whale id.
      *
-     * @param name A string containing the whale's name
+     * @param whaleId A long id that uniquely identifies a whale
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setWhaleId(long whaleId) {
+        this.whaleId = whaleId;
     }
 
     /**
@@ -80,12 +78,12 @@ public class Whale {
     }
 
     /**
-     * Sets whale's gender
+     * Sets whale name
      *
-     * @param gender An Enum representing the whale's gender
+     * @param name A string containing the whale's name
      */
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -98,12 +96,12 @@ public class Whale {
     }
 
     /**
-     * Sets the whale's color
+     * Sets whale's gender
      *
-     * @param color A string representing whale's color
+     * @param gender An Enum representing the whale's gender
      */
-    public void setColor(String color) {
-        this.color = color;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     /**
@@ -116,12 +114,12 @@ public class Whale {
     }
 
     /**
-     * Sets the whale's species.
+     * Sets the whale's color
      *
-     * @param species An enum representing whale's species
+     * @param color A string representing whale's color
      */
-    public void setSpecies(Species species) {
-        this.species = species;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     /**
@@ -131,5 +129,38 @@ public class Whale {
      */
     public Species getSpecies() {
         return this.species;
+    }
+
+    /**
+     * Sets the whale's species.
+     *
+     * @param species An enum representing whale's species
+     */
+    public void setSpecies(Species species) {
+        this.species = species;
+    }
+
+    /**
+     * Nested Comparator class for whales to compare by Id
+     *
+     * @param whale1, whale2 Whale's to be compared
+     * @return int Representing how the whale's compare
+     */
+    static class CompareById implements Comparator<Whale> {
+        public int compare(Whale whale1, Whale whale2) {
+            return (int) (whale1.getWhaleId() - whale2.getWhaleId());
+        }
+    }
+
+    /**
+     * Nested Comparator class for whales to compare by Species
+     *
+     * @param whale1, whale2 Whale's to be compared
+     * @return int Representing how the whale's Species compare
+     */
+    static class CompareBySpecies implements Comparator<Whale> {
+        public int compare(Whale whale1, Whale whale2) {
+            return whale1.getSpecies().compareTo(whale2.getSpecies());
+        }
     }
 }
