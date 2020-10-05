@@ -1,24 +1,25 @@
 package ca.uvic.seng330.ex3;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * A collection of whales and associated search methods on the
  * collection
  */
-public class WhaleRepository implements Repository<Whale> {
+public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
 
     private List<Whale> whales;
 
     public WhaleRepository(){
-        whales = new LinkedList<>();
+        whales = new ArrayList<>();
     }
 
     public WhaleRepository(List<Whale> initialWhales){
         if (initialWhales != null) {
-            this.whales = new LinkedList<>(initialWhales);
+            this.whales = new ArrayList<>(initialWhales);
         }
     }
 
@@ -28,7 +29,7 @@ public class WhaleRepository implements Repository<Whale> {
      */
     public WhaleRepository(WhaleRepository other){
         if (other.whales != null) {
-            this.whales = new LinkedList<>(other.whales);
+            this.whales = new ArrayList<>(other.whales);
         }
     }
 
@@ -80,13 +81,22 @@ public class WhaleRepository implements Repository<Whale> {
      */
     @Override
     public void add(Whale whale) {
-        System.out.println("Added Whale!");
+        whales.add(whale);
     }
 
     /**
-     * @return Returns a Linked List of the whales in the repository
+     * @return Returns a Array List of the whales in the repository
      */
     public List<Whale> getWhales() {
-        return new LinkedList<>(whales);
+        return new ArrayList<>(whales);
+    }
+
+    @Override
+    public Iterator<Whale> iterator() {
+        return whales.iterator();
+    }
+
+    public void sortById() {
+        Collections.sort(whales, new Whale.CompareById());
     }
 }
