@@ -1,9 +1,6 @@
 package ca.uvic.seng330.ex3;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * A collection of whales and associated search methods on the
@@ -40,11 +37,7 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      */
     public Whale getByName(String name) throws Exception {
         System.out.println("Getting Whale with name");
-        Whale search = new Whale();
-        search.setName(name);
-        int index = Collections.binarySearch(whales, search);
-        if(index >= 0) return whales.get(index);
-        throw new Exception("Getting Whale with name " + name + " failed");
+        return null;
     }
 
     /**
@@ -78,7 +71,12 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
         System.out.println("Getting Whales with id" );
         Whale search = new Whale();
         search.setWhaleId(id);
-        int index = Collections.binarySearch(whales, search);
+        int index = Collections.binarySearch(whales, search, new Comparator<Whale>() {
+            @Override
+            public int compare(Whale o1, Whale o2) {
+                return (int)(o1.getWhaleId() - o2.getWhaleId());
+            }
+        });
         if(index >= 0) return whales.get(index);
         throw new Exception("Getting Whales with id " + Long.toString(id) + " failed");
     }
