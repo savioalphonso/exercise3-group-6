@@ -38,9 +38,13 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      * @param name - name of a whale
      * @return Whale object whose name field variable matches the name parameter
      */
-    public Whale getByName(String name){
+    public Whale getByName(String name) throws Exception {
         System.out.println("Getting Whale with name");
-        return null;
+        Whale search = new Whale();
+        search.setName(name);
+        int index = Collections.binarySearch(whales, search);
+        if(index >= 0) return whales.get(index);
+        throw new Exception("Getting Whale with name " + name + " failed");
     }
 
     /**
@@ -70,9 +74,13 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      * @return Specific Whale Object with id <code>id</code>
      */
     @Override
-    public Whale getById(int id) {
+    public Whale getById(long id) throws Exception {
         System.out.println("Getting Whales with id" );
-        return null;
+        Whale search = new Whale();
+        search.setWhaleId(id);
+        int index = Collections.binarySearch(whales, search);
+        if(index >= 0) return whales.get(index);
+        throw new Exception("Getting Whales with id " + Long.toString(id) + " failed");
     }
 
     /**

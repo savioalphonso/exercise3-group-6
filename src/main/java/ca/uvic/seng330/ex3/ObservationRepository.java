@@ -55,7 +55,7 @@ public class ObservationRepository implements Repository<Observation>{
      * @return a observation on whale with id <code>id</code>
      */
     @Override
-    public Observation getById(int id) {
+    public Observation getById(long id) {
         System.out.println("Getting Observations by Species");
         return null;
     }

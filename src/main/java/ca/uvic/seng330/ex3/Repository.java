@@ -12,14 +12,14 @@ public interface Repository<T>{
      * @param species - species of the desired object
      * @return collection of objects that match the species parameter
      */
-    List<T> getBySpecies(Species species);
+    List<T> getBySpecies(Species species) throws Exception;
 
     /**
      * Get a specific object that matches id
      * @param id - id of the specific desired object
      * @return specific instance of an object that matches id parameter
      */
-    T getById(int id);
+    T getById(long id) throws Exception;
 
     /**
      * Add an object into the collection
