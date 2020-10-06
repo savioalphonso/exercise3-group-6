@@ -71,12 +71,7 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
         System.out.println("Getting Whales with id" );
         Whale search = new Whale();
         search.setWhaleId(id);
-        int index = Collections.binarySearch(whales, search, new Comparator<Whale>() {
-            @Override
-            public int compare(Whale o1, Whale o2) {
-                return (int)(o1.getWhaleId() - o2.getWhaleId());
-            }
-        });
+        int index = Collections.binarySearch(whales, search, new Whale.CompareById());
         if(index >= 0) return whales.get(index);
         throw new Exception("Getting Whales with id " + Long.toString(id) + " failed");
     }
