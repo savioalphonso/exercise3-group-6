@@ -3,39 +3,49 @@
  */
 package ca.uvic.seng330.ex3;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.desktop.SystemSleepEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
+    private WhaleRepository whales;
+    private Whale whale1;
+    private Whale whale2;
+    private Whale whale3;
+    private Whale whale4;
+
+    //In JUnit5 @Before and @After no longer exists, use @BeforeEach and @AfterEach instead.
+    @BeforeEach
+    void before(){
+        whale1 = new Whale(5, "Moby Dick", Gender.MALE, "White", Species.UNKNOWN);
+        whale2 = new Whale(0, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
+        whale3 = new Whale(2, "Ralph", Gender.MALE, "Gray", Species.UNKNOWN);
+        whale4 = new Whale(1, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
+
+        whales = new WhaleRepository();
+        whales.add(whale1);
+        whales.add(whale2);
+        whales.add(whale3);
+        whales.add(whale4);
+    }
+
     @Test void appHasAGreeting() {
         Driver classUnderTest = new Driver();
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
 
     @Test void whale1IsGreater() {
-        Whale whale1 = new Whale(5, "Moby Dick", Gender.MALE, "White", Species.UNKNOWN);
-        Whale whale2 = new Whale(0, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
-
         Whale.CompareById comparer = new Whale.CompareById();
         int x = comparer.compare(whale1, whale2);
         assertEquals(5, x);
     }
 
     @Test void sortWhalesById() {
-        Whale whale1 = new Whale(5, "Moby Dick", Gender.MALE, "White", Species.UNKNOWN);
-        Whale whale2 = new Whale(0, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
-        Whale whale3 = new Whale(2, "Ralph", Gender.MALE, "Gray", Species.UNKNOWN);
-        Whale whale4 = new Whale(1, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
-
-        WhaleRepository whales = new WhaleRepository();
-        whales.add(whale1);
-        whales.add(whale2);
-        whales.add(whale3);
-        whales.add(whale4);
         whales.sortById();
 
         List<Whale> ans = new ArrayList();
@@ -47,17 +57,6 @@ class AppTest {
     }
 
     @Test void searchById(){
-        Whale whale1 = new Whale(5, "Moby Dick", Gender.MALE, "White", Species.UNKNOWN);
-        Whale whale2 = new Whale(0, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
-        Whale whale3 = new Whale(2, "Ralph", Gender.MALE, "Gray", Species.UNKNOWN);
-        Whale whale4 = new Whale(1, "Summer", Gender.MALE, "Gray", Species.UNKNOWN);
-
-        WhaleRepository whales = new WhaleRepository();
-        whales.add(whale1);
-        whales.add(whale2);
-        whales.add(whale3);
-        whales.add(whale4);
-
         Whale result = whales.getById(2);
         assertNotEquals(null, result);
         assertEquals("Ralph", result.getName());
