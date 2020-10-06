@@ -61,4 +61,10 @@ class AppTest {
         assertNotEquals(null, result);
         assertEquals("Ralph", result.getName());
     }
+
+    @Test void searchByGender(){
+        List<Whale> result = whales.getByGender(Gender.MALE);
+        assertNotEquals(null, result);
+        assertEquals(4, result.size());
+    }
 }

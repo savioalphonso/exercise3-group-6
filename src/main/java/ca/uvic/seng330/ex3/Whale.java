@@ -15,6 +15,7 @@ public class Whale implements Comparable<Whale> {
         this.name = name;
         this.color = color;
         this.species = species;
+        this.gender = gender;
 
         System.out.println("Created Whale \"" + name + "\"");
     }
