@@ -67,4 +67,10 @@ class AppTest {
         assertNotEquals(null, result);
         assertEquals(4, result.size());
     }
+
+    @Test void searchBySpecies(){
+        List<Whale> result = whales.getBySpecies(Species.UNKNOWN);
+        assertNotEquals(null, result);
+        assertEquals(4, result.size());
+    }
 }

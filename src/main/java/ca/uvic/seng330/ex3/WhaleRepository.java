@@ -63,8 +63,14 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      */
     @Override
     public List<Whale> getBySpecies(Species species) {
-        System.out.println("Getting Whales with gender");
-        return null;
+        System.out.println("Getting Whales with species");
+        List<Whale> result = new ArrayList<>();
+        for(Whale whale:this){
+            if(whale.getSpecies().equals(species)){
+                result.add(whale);
+            }
+        }
+        return result;
     }
 
     /**
