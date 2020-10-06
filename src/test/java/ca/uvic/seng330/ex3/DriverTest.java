@@ -58,10 +58,8 @@ class AppTest {
         whales.add(whale3);
         whales.add(whale4);
 
-        Whale result = assertDoesNotThrow(()->{
-            Whale ret = whales.getById(2);
-            return ret;
-        });
+        Whale result = whales.getById(2);
+        assertNotEquals(null, result);
         assertEquals("Ralph", result.getName());
     }
 }
