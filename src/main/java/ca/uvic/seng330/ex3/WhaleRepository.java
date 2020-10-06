@@ -35,7 +35,7 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      * @param name - name of a whale
      * @return Whale object whose name field variable matches the name parameter
      */
-    public Whale getByName(String name) throws Exception {
+    public Whale getByName(String name) {
         System.out.println("Getting Whale with name");
         return null;
     }
@@ -47,7 +47,13 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      */
     public List<Whale> getByGender(Gender gender){
         System.out.println("Getting Whales with gender");
-        return null;
+        List<Whale> result = new ArrayList<>();
+        for(Whale whale:this){
+            if(whale.getGender().equals(gender)){
+                result.add(whale);
+            }
+        }
+        return result;
     }
 
     /**
@@ -67,13 +73,13 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      * @return Specific Whale Object with id <code>id</code>
      */
     @Override
-    public Whale getById(long id) throws Exception {
+    public Whale getById(long id) {
         System.out.println("Getting Whales with id" );
         Whale search = new Whale();
         search.setWhaleId(id);
         int index = Collections.binarySearch(whales, search, new Whale.CompareById());
         if(index >= 0) return whales.get(index);
-        throw new Exception("Getting Whales with id " + Long.toString(id) + " failed");
+        return null;
     }
 
     /**
