@@ -1,4 +1,5 @@
 package ca.uvic.seng330.ex3;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,14 +9,14 @@ public class ObservationRepository implements Repository<Observation>{
     private List<Observation> observations;
 
     public ObservationRepository(List<Observation> observations) {
-        this.observations = new LinkedList<>(observations);
+        this.observations = new ArrayList<>(observations);
     }
 
     public ObservationRepository(){}
 
     public ObservationRepository(ObservationRepository other){
         if (other.observations != null)
-            this.observations = new LinkedList<>(other.observations);
+            this.observations = new ArrayList<>(other.observations);
     }
 
     /**
