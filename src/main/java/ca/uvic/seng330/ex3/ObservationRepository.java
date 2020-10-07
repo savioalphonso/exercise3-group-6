@@ -1,21 +1,19 @@
 package ca.uvic.seng330.ex3;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-public class ObservationRepository implements Repository<Observation>{
+public class ObservationRepository implements Repository<Observation>, Iterable<Observation> {
 
     private List<Observation> observations;
 
     public ObservationRepository(List<Observation> observations) {
-        this.observations = new LinkedList<>(observations);
+        this.observations = new ArrayList<>(observations);
     }
 
     public ObservationRepository(){}
 
     public ObservationRepository(ObservationRepository other){
         if (other.observations != null)
-            this.observations = new LinkedList<>(other.observations);
+            this.observations = new ArrayList<>(other.observations);
     }
 
     /**
@@ -60,12 +58,25 @@ public class ObservationRepository implements Repository<Observation>{
         return null;
     }
 
+    public List<Observation> getObservations() {
+        return new ArrayList<>(observations);
+    }
+
     /**
      * Add a specific observation to the collection
      * @param observation the observation to be added
      */
     @Override
     public void add(Observation observation) {
-        System.out.println("Adding Observations");
+        observations.add(observation);
+    }
+
+    @Override
+    public Iterator<Observation> iterator() {
+        return observations.iterator();
+    }
+
+    public void sortByDate() {
+        Collections.sort(observations, new Observation.compareByDate());
     }
 }

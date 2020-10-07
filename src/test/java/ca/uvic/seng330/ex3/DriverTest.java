@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.desktop.SystemSleepEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,5 +73,21 @@ class AppTest {
         List<Whale> result = whales.getBySpecies(Species.UNKNOWN);
         assertNotEquals(null, result);
         assertEquals(4, result.size());
+    }
+
+    @Test void sortObservationRepositoryByDate() {
+        Observation observation1 = new Observation();
+        observation1.setSightingTime(new Date());
+        Observation observation2 = new Observation();
+        observation2.setSightingTime(new Date());
+
+        List<Observation> list = new ArrayList<>();
+        list.add(observation1);
+        list.add(observation2);
+
+        ObservationRepository repo = new ObservationRepository(list);
+
+        repo.sortByDate();
+        assertEquals(list, repo.getObservations());
     }
 }
