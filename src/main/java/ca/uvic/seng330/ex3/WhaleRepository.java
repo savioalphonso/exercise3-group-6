@@ -1,9 +1,6 @@
 package ca.uvic.seng330.ex3;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * A collection of whales and associated search methods on the
@@ -38,7 +35,7 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      * @param name - name of a whale
      * @return Whale object whose name field variable matches the name parameter
      */
-    public Whale getByName(String name){
+    public Whale getByName(String name) {
         System.out.println("Getting Whale with name");
         return null;
     }
@@ -50,7 +47,13 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      */
     public List<Whale> getByGender(Gender gender){
         System.out.println("Getting Whales with gender");
-        return null;
+        List<Whale> result = new ArrayList<>();
+        for(Whale whale:this){
+            if(whale.getGender().equals(gender)){
+                result.add(whale);
+            }
+        }
+        return result;
     }
 
     /**
@@ -60,8 +63,14 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      */
     @Override
     public List<Whale> getBySpecies(Species species) {
-        System.out.println("Getting Whales with gender");
-        return null;
+        System.out.println("Getting Whales with species");
+        List<Whale> result = new ArrayList<>();
+        for(Whale whale:this){
+            if(whale.getSpecies().equals(species)){
+                result.add(whale);
+            }
+        }
+        return result;
     }
 
     /**
@@ -70,8 +79,12 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
      * @return Specific Whale Object with id <code>id</code>
      */
     @Override
-    public Whale getById(int id) {
+    public Whale getById(long id) {
         System.out.println("Getting Whales with id" );
+        Whale search = new Whale();
+        search.setWhaleId(id);
+        int index = Collections.binarySearch(whales, search, new Whale.CompareById());
+        if(index >= 0) return whales.get(index);
         return null;
     }
 

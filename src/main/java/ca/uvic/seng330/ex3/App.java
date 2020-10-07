@@ -30,6 +30,5 @@ public class App {
 
         WhaleRepository whales = new WhaleRepository();
         whales.add(mobyDick);
-
     }
 }

@@ -19,7 +19,7 @@ public interface Repository<T>{
      * @param id - id of the specific desired object
      * @return specific instance of an object that matches id parameter
      */
-    T getById(int id);
+    T getById(long id);
 
     /**
      * Add an object into the collection

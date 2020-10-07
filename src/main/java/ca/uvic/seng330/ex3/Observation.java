@@ -31,7 +31,7 @@ public class Observation {
      */
     public User getReporter() {
         System.out.println("Getting Reporter");
-        return null;
+        return reporter;
     }
 
     /**
@@ -39,24 +39,26 @@ public class Observation {
      * @param User - Reporter of Observation
      */
     public void setReporter(User reporter) {
+        this.reporter = reporter;
         System.out.println("Setting Reporter");
     }
 
     /**
      * Get ObservationId of Observation
-     * @return int - ObservationId number
+     * @return long - ObservationId number
      */
-    public int getObservationId() {
+    public long getObservationId() {
         System.out.println("Getting Observation Id");
-        return 0;
+        return observationId;
     }
 
     /**
      * Set ObservationId of Observation
      * @param observationId - ObservationId number
      */
-    public void setObservationId(int observationId) {
+    public void setObservationId(long observationId) {
         System.out.println("Setting Observation Id");
+        this.observationId = observationId;
     }
 
     /**
@@ -65,7 +67,7 @@ public class Observation {
      */
     public Date getSightingTime() {
         System.out.println("Getting Sighting Time");
-        return null;
+        return sightingTime;
     }
 
     /**
@@ -74,6 +76,7 @@ public class Observation {
      */
     public void setSightingTime(Date sightingTime) {
         System.out.println("Setting Sighting Time");
+        this.sightingTime = sightingTime;
     }
 
     /**
@@ -82,7 +85,7 @@ public class Observation {
      */
     public Species getSpecies() {
         System.out.println("Getting Species");
-        return null;
+        return species;
     }
 
     /**
@@ -91,6 +94,7 @@ public class Observation {
      */
     public void setSpecies(Species species) {
         System.out.println("Setting Species");
+        this.species = species;
     }
 
     /**
@@ -99,7 +103,7 @@ public class Observation {
      */
     public Direction getDirection() {
         System.out.println("Getting Direction");
-        return null;
+        return direction;
     }
 
     /**
@@ -108,6 +112,7 @@ public class Observation {
      */
     public void Direction(Direction direction) {
         System.out.println("Setting Direction");
+        this.direction = direction;
     }
 
     /**
@@ -116,7 +121,7 @@ public class Observation {
      */
     public String getConditions() {
         System.out.println("Getting Conditions");
-        return null;
+        return conditions;
     }
 
     /**
@@ -125,6 +130,7 @@ public class Observation {
      */
     public void setConditions(String conditions) {
         System.out.println("Setting Conditions");
+        this.conditions = conditions;
     }
 
     /**
