@@ -6,7 +6,7 @@ import java.util.List;
  * Collection of objects with a species and and id
  * @param <T> Any object with a species and id field variable
  */
-public interface Repository<T>{
+public interface Repository<T> extends Iterable<T>{
     /**
      * Get a collection of objects that matches the species parameter
      * @param species - species of the desired object

@@ -37,7 +37,7 @@ public class Observation implements Comparable<Observation> {
 
     /**
      * Set Reporter of Observation
-     * @param User - Reporter of Observation
+     * @param reporter - Reporter of Observation
      */
     public void setReporter(User reporter) {
         this.reporter = reporter;
@@ -161,8 +161,12 @@ public class Observation implements Comparable<Observation> {
     }
 
     @Override
-    public int compareTo(Observation o) {
-        return sightingTime.compareTo(o.sightingTime);
+    public int compareTo(Observation other) {
+
+        if (other == null)
+            throw new NullPointerException();
+
+        return (int) (observationId - other.observationId);
     }
 
     static class compareByDate implements Comparator<Observation> {
