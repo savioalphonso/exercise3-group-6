@@ -1,10 +1,11 @@
 package ca.uvic.seng330.ex3;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  * Whale observation details and associated methods
  */
-public class Observation {
+public class Observation implements Comparable<Observation> {
 
     private User reporter;
     private long observationId;
@@ -36,7 +37,7 @@ public class Observation {
 
     /**
      * Set Reporter of Observation
-     * @param User - Reporter of Observation
+     * @param reporter - Reporter of Observation
      */
     public void setReporter(User reporter) {
         this.reporter = reporter;
@@ -157,5 +158,20 @@ public class Observation {
         this.conditions = conditions;
 
         System.out.print("Observed a whale");
+    }
+
+    @Override
+    public int compareTo(Observation other) {
+
+        if (other == null)
+            throw new NullPointerException();
+
+        return (int) (observationId - other.observationId);
+    }
+
+    static class compareByDate implements Comparator<Observation> {
+        public int compare(Observation obs1, Observation obs2) {
+            return obs1.getSightingTime().compareTo(obs2.getSightingTime());
+        }
     }
 }

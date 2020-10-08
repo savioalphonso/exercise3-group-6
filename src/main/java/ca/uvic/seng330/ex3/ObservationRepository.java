@@ -1,10 +1,7 @@
 package ca.uvic.seng330.ex3;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-public class ObservationRepository implements Repository<Observation>{
+public class ObservationRepository implements Repository<Observation> {
 
     private List<Observation> observations;
 
@@ -15,8 +12,10 @@ public class ObservationRepository implements Repository<Observation>{
     public ObservationRepository(){}
 
     public ObservationRepository(ObservationRepository other){
-        if (other.observations != null)
-            this.observations = new ArrayList<>(other.observations);
+        if (other.observations == null)
+            throw new NullPointerException("Repository to copy is null");
+
+        this.observations = new ArrayList<>(other.observations);
     }
 
     /**
@@ -25,9 +24,45 @@ public class ObservationRepository implements Repository<Observation>{
      * @return collection of observations submitted on the date <code>date</code>
      */
     public List<Observation> getByDate(Date date){
-        System.out.println("Getting Observations by date");
-        return null;
+
+        if (date == null)
+            throw new NullPointerException();
+
+        Comparator<Observation> byDate = new Observation.compareByDate();
+        List<Observation> sortedObservations = getSortedList(byDate);
+        List<Observation> result = new LinkedList<>();
+
+        Observation key = new Observation();
+        key.setSightingTime(date);
+
+        int lower_bound = Collections.binarySearch(sortedObservations, key, byDate);
+
+        if (lower_bound >= 0){
+            int upper_bound = lower_bound + 1;
+            Observation cur = new Observation(key);
+
+            while (key.compareTo(cur) == 0){
+                cur = sortedObservations.get(upper_bound);
+                result.add(new Observation(cur));
+                upper_bound++;
+            }
+        } else {
+            throw new NoSuchElementException("No Observations dated: " + date.toString());
+        }
+
+        return result;
     }
+
+    public void sortByDate(){
+        observations =  getSortedList(new Observation.compareByDate());
+    }
+
+    private List<Observation> getSortedList(Comparator<Observation> comparator){
+        List<Observation> sortedObservations = new ArrayList<>(observations);
+        sortedObservations.sort(comparator);
+        return sortedObservations;
+    }
+
 
     /**
      * Find all the observations on a certain reporter
@@ -57,16 +92,40 @@ public class ObservationRepository implements Repository<Observation>{
      */
     @Override
     public Observation getById(long id) {
-        System.out.println("Getting Observations by Species");
-        return null;
+
+        if (id < 0 || id > observations.size())
+            throw new IllegalArgumentException("Id must be greater than 0 but less than " + observations.size());
+
+        List<Observation> sortedObservations = new ArrayList<>(observations);
+        Collections.sort(sortedObservations);
+        Observation search = new Observation();
+        search.setObservationId(id);
+
+        int index = Collections.binarySearch(sortedObservations, search);
+
+        if (index < 0)
+            throw new NoSuchElementException("No Element with id " + id);
+
+        return sortedObservations.get(index);
+    }
+
+    public List<Observation> getObservations() {
+        return new ArrayList<>(observations);
     }
 
     /**
      * Add a specific observation to the collection
      * @param observation the observation to be added
      */
-    @Override
     public void add(Observation observation) {
-        System.out.println("Adding Observations");
+
+        Observation copy = new Observation(observation);
+        observations.add(copy);
     }
+
+    @Override
+    public Iterator<Observation> iterator() {
+        return observations.iterator();
+    }
+
 }

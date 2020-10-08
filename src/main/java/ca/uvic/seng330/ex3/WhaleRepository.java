@@ -6,7 +6,7 @@ import java.util.*;
  * A collection of whales and associated search methods on the
  * collection
  */
-public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
+public class WhaleRepository implements Repository<Whale> {
 
     private List<Whale> whales;
 
@@ -110,6 +110,6 @@ public class WhaleRepository implements Repository<Whale>, Iterable<Whale> {
     }
 
     public void sortById() {
-        Collections.sort(whales, new Whale.CompareById());
+        whales.sort(new Whale.CompareById());
     }
 }
