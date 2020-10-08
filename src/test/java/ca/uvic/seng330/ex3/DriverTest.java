@@ -3,7 +3,6 @@
  */
 package ca.uvic.seng330.ex3;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +50,6 @@ class AppTest {
         }catch (Exception e){
             System.out.println(e);
         }
-        System.out.println(observation3.getSightingTime().toString());
         List<Observation> list = new ArrayList<>();
         list.add(observation1);
         list.add(observation2);
