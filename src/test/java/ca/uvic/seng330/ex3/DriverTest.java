@@ -19,6 +19,10 @@ class AppTest {
     private Whale whale2;
     private Whale whale3;
     private Whale whale4;
+    private ObservationRepository observations;
+    private Observation observation1;
+    private Observation observation2;
+    private Observation observation3;
 
     //In JUnit5 @Before and @After no longer exists, use @BeforeEach and @AfterEach instead.
     @BeforeEach
@@ -33,6 +37,16 @@ class AppTest {
         whales.add(whale2);
         whales.add(whale3);
         whales.add(whale4);
+
+        observation1 = new Observation();
+        observation1.setSightingTime(new Date(2020,10,6));
+        observation2 = new Observation();
+        observation2.setSightingTime(new Date(2020,10,8));
+        List<Observation> list = new ArrayList<>();
+        list.add(observation1);
+        list.add(observation2);
+
+        observations = new ObservationRepository(list);
     }
 
     @Test void appHasAGreeting() {
@@ -76,18 +90,10 @@ class AppTest {
     }
 
     @Test void sortObservationRepositoryByDate() {
-        Observation observation1 = new Observation();
-        observation1.setSightingTime(new Date());
-        Observation observation2 = new Observation();
-        observation2.setSightingTime(new Date());
-
         List<Observation> list = new ArrayList<>();
         list.add(observation1);
         list.add(observation2);
-
-        ObservationRepository repo = new ObservationRepository(list);
-
-        repo.sortByDate();
-        assertEquals(list, repo.getObservations());
+        observations.sortByDate();
+        assertEquals(list, observations.getObservations());
     }
 }
