@@ -3,10 +3,12 @@
  */
 package ca.uvic.seng330.ex3;
 
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.desktop.SystemSleepEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,12 +40,18 @@ class AppTest {
         whales.add(whale3);
         whales.add(whale4);
 
-        observation1 = new Observation();
-        observation1.setSightingTime(new Date(2020,10,6));
-        observation2 = new Observation();
-        observation2.setSightingTime(new Date(2020,10,8));
-        observation3 = new Observation();
-        observation3.setSightingTime(new Date(2020,9,8));
+        SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
+        try {
+            observation1 = new Observation();
+            observation1.setSightingTime(format.parse("2020-10-01")); //2020-10-1
+            observation2 = new Observation();
+            observation2.setSightingTime(format.parse("2020-09-01")); //2020-9-1
+            observation3 = new Observation();
+            observation3.setSightingTime(format.parse("2020-09-05")); //2020-9-5
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        System.out.println(observation3.getSightingTime().toString());
         List<Observation> list = new ArrayList<>();
         list.add(observation1);
         list.add(observation2);
@@ -94,10 +102,31 @@ class AppTest {
 
     @Test void sortObservationRepositoryByDate() {
         List<Observation> list = new ArrayList<>();
+        list.add(observation2);
         list.add(observation3);
         list.add(observation1);
-        list.add(observation2);
         observations.sortByDate();
         assertEquals(list, observations.getObservations());
+    }
+
+    @Test void searchByDate(){
+        SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
+        Date date = new Date();
+        try{
+            date = format.parse("2020-09-01");
+        }catch (Exception e){
+            System.out.println(e);
+            assertTrue(false);
+        }
+        List<Observation> list = new ArrayList<>();
+        list.add(observation1);
+        List<Observation> search = new ArrayList<>();
+        try {
+            search = observations.getByDate(date);
+        }catch (Exception e){
+            assertTrue(false);
+        }
+        assertEquals(1, search.size());
+        assertEquals(date, search.get(0).getSightingTime());
     }
 }
