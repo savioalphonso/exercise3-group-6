@@ -42,9 +42,12 @@ class AppTest {
         observation1.setSightingTime(new Date(2020,10,6));
         observation2 = new Observation();
         observation2.setSightingTime(new Date(2020,10,8));
+        observation3 = new Observation();
+        observation3.setSightingTime(new Date(2020,9,8));
         List<Observation> list = new ArrayList<>();
         list.add(observation1);
         list.add(observation2);
+        list.add(observation3);
 
         observations = new ObservationRepository(list);
     }
@@ -91,6 +94,7 @@ class AppTest {
 
     @Test void sortObservationRepositoryByDate() {
         List<Observation> list = new ArrayList<>();
+        list.add(observation3);
         list.add(observation1);
         list.add(observation2);
         observations.sortByDate();
