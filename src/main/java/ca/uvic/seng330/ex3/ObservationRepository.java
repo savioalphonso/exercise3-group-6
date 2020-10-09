@@ -53,6 +53,17 @@ public class ObservationRepository implements Repository<Observation> {
         return result;
     }
 
+    public void sortByDate(){
+        if(observations != null && observations.size() > 0)
+            observations =  getSortedList(new Observation.compareByDate());
+    }
+
+    public void sortById(){
+        if(observations != null && observations.size() > 0)
+            Collections.sort(observations);
+    }
+
+
     private List<Observation> getSortedList(Comparator<Observation> comparator){
         List<Observation> sortedObservations = new ArrayList<>(observations);
         sortedObservations.sort(comparator);

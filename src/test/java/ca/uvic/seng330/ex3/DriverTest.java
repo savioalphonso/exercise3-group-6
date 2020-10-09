@@ -3,91 +3,14 @@
  */
 package ca.uvic.seng330.ex3;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.desktop.SystemSleepEvent;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
-    private WhaleRepository whales;
-    private Whale whale1;
-    private Whale whale2;
-    private Whale whale3;
-    private Whale whale4;
-
-    //In JUnit5 @Before and @After no longer exists, use @BeforeEach and @AfterEach instead.
-    @BeforeEach
-    void before(){
-        whale1 = new Whale(5, "Moby Dick", Gender.MALE, "White", Species.UNKNOWN);
-        whale2 = new Whale(0, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
-        whale3 = new Whale(2, "Ralph", Gender.MALE, "Gray", Species.UNKNOWN);
-        whale4 = new Whale(1, "Sam", Gender.MALE, "Gray", Species.UNKNOWN);
-
-        whales = new WhaleRepository();
-        whales.add(whale1);
-        whales.add(whale2);
-        whales.add(whale3);
-        whales.add(whale4);
-    }
-
     @Test void appHasAGreeting() {
         Driver classUnderTest = new Driver();
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
-    }
-
-    @Test void whale1IsGreater() {
-        Whale.CompareById comparer = new Whale.CompareById();
-        int x = comparer.compare(whale1, whale2);
-        assertEquals(5, x);
-    }
-
-    @Test void sortWhalesById() {
-        whales.sortById();
-
-        List<Whale> ans = new ArrayList();
-        ans.add(whale2);
-        ans.add(whale4);
-        ans.add(whale3);
-        ans.add(whale1);
-        assertEquals(ans, whales.getWhales());
-    }
-
-    @Test void searchById(){
-        Whale result = whales.getById(2);
-        assertNotEquals(null, result);
-        assertEquals("Ralph", result.getName());
-    }
-
-    @Test void searchByGender(){
-        List<Whale> result = whales.getByGender(Gender.MALE);
-        assertNotEquals(null, result);
-        assertEquals(4, result.size());
-    }
-
-    @Test void searchBySpecies(){
-        List<Whale> result = whales.getBySpecies(Species.UNKNOWN);
-        assertNotEquals(null, result);
-        assertEquals(4, result.size());
-    }
-
-    @Test void sortObservationRepositoryByDate() {
-        Observation observation1 = new Observation();
-        observation1.setSightingTime(new Date());
-        Observation observation2 = new Observation();
-        observation2.setSightingTime(new Date());
-
-        List<Observation> list = new ArrayList<>();
-        list.add(observation1);
-        list.add(observation2);
-
-        ObservationRepository repo = new ObservationRepository(list);
-
-        repo.sortByDate();
-        assertEquals(list, repo.getObservations());
     }
 }
