@@ -6,6 +6,7 @@ package ca.uvic.seng330.ex3;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,7 +36,7 @@ class ObservationTests {
             observation3.setSightingTime(format.parse("2020-09-05")); //2020-9-5
             observation3.setObservationId(3);
         } catch (Exception e) {
-            System.out.println(e);
+            fail();
         }
         List<Observation> list = new ArrayList<>();
         list.add(observation1);
@@ -48,12 +49,12 @@ class ObservationTests {
 
     @Test
     void sortObservationRepositoryByDate() {
-        List<Observation> list = new ArrayList<>();
-        list.add(observation2);
-        list.add(observation3);
-        list.add(observation1);
+        List<Observation> expectedList = new ArrayList<>();
+        expectedList.add(observation2);
+        expectedList.add(observation3);
+        expectedList.add(observation1);
         observations.sortByDate();
-        assertEquals(list, observations.getObservations());
+        assertEquals(expectedList, observations.getObservations());
     }
 
     @Test
@@ -95,17 +96,11 @@ class ObservationTests {
     }
 
     @Test
-    void searchByDate() {
+    void searchByDate() throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        try {
-            date = format.parse("2020-09-01");
-        } catch (Exception e) {
-            System.out.println(e);
-            fail();
-        }
-        List<Observation> list = new ArrayList<>();
-        list.add(observation1);
+        date = format.parse("2020-09-01");
+
         List<Observation> search = new ArrayList<>();
         try {
             search = observations.getByDate(date);
