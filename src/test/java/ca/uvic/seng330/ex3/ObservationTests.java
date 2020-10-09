@@ -20,6 +20,7 @@ class ObservationTests {
     private Observation observation1;
     private Observation observation2;
     private Observation observation3;
+    private Observation observation4;
 
     @BeforeEach
     void before() {
@@ -36,6 +37,9 @@ class ObservationTests {
             observation3 = new Observation();
             observation3.setSightingTime(format.parse("2020-09-05")); //2020-9-5
             observation3.setObservationId(3);
+            observation4 = new Observation();
+            observation4.setSightingTime(format.parse("2020-09-05")); //2020-9-5
+            observation4.setObservationId(4);
         } catch (Exception e) {
             fail();
         }
@@ -43,6 +47,7 @@ class ObservationTests {
         list.add(observation1);
         list.add(observation3);
         list.add(observation2);
+        list.add(observation4);
 
         observations = new ObservationRepository(list);
 
@@ -53,6 +58,7 @@ class ObservationTests {
         List<Observation> expectedList = new ArrayList<>();
         expectedList.add(observation2);
         expectedList.add(observation3);
+        expectedList.add(observation4);
         expectedList.add(observation1);
         observations.sortByDate();
         assertEquals(expectedList, observations.getObservations());
@@ -75,12 +81,14 @@ class ObservationTests {
         list.add(observation1);
         list.add(observation2);
         list.add(observation3);
+        list.add(observation4);
         observations.sortById();
         assertEquals(list, observations.getObservations());
 
         List<Observation> list2 = new ArrayList<>();
         list2.add(observation1);
         list2.add(observation3);
+        list2.add(observation4);
         list2.add(observation2);
         assertNotEquals(list2, observations.getObservations());
     }
@@ -99,8 +107,7 @@ class ObservationTests {
     @Test
     void searchByDate() throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        date = format.parse("2020-09-01");
+        Date date = format.parse("2020-09-01");
 
         List<Observation> search = new ArrayList<>();
         try {
@@ -113,11 +120,30 @@ class ObservationTests {
     }
 
     @Test
+    void searchMultipleResultsByDate() throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = format.parse("2020-09-05");
+        List<Observation> search = new ArrayList<>();
+
+        List<Observation> results = new ArrayList<>();
+        results.add(observation3);
+        results.add(observation4);
+
+        try {
+            search = observations.getByDate(date);
+        } catch (Exception e) {
+            fail();
+        }
+        assertEquals(2, search.size());
+        assertEquals(date, search.get(0).getSightingTime());
+        assertEquals(date, search.get(1).getSightingTime());
+    }
+
+    @Test
     void searchByInvalidDate() throws ParseException {
         assertThrows(NullPointerException.class,
                 () -> {
-                    List<Observation> search = new ArrayList<>();
-                    search = observations.getByDate(null);
+                    List<Observation> search = observations.getByDate(null);
                 });
     }
 
