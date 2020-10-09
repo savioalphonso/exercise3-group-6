@@ -140,10 +140,20 @@ class ObservationTests {
     }
 
     @Test
-    void searchByInvalidDate() throws ParseException {
+    void searchByInvalidDate() {
         assertThrows(NullPointerException.class,
                 () -> {
                     List<Observation> search = observations.getByDate(null);
+                });
+    }
+
+    @Test
+    void searchByDateEmptyResult() {
+        assertThrows(NoSuchElementException.class,
+                () -> {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = format.parse("2020-09-23");
+                    List<Observation> search = observations.getByDate(date);
                 });
     }
 
