@@ -47,7 +47,7 @@ class WhaleTests {
         assertEquals("Ralph", result.getName());
 
         Whale result2 = whales.getById(-1); // Negative test case
-        assertEquals(null, result2);
+        assertNull(result2);
     }
 
     @Test

@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -112,6 +113,15 @@ class ObservationTests {
     }
 
     @Test
+    void searchByInvalidDate() throws ParseException {
+        assertThrows(NullPointerException.class,
+                () -> {
+                    List<Observation> search = new ArrayList<>();
+                    search = observations.getByDate(null);
+                });
+    }
+
+    @Test
     void searchById() {
         Observation search = null;
         long SEARCH_OBSERVATION_ID = 1;
@@ -121,5 +131,13 @@ class ObservationTests {
             fail();
         }
         assertEquals(SEARCH_OBSERVATION_ID, search.getObservationId());
+    }
+
+    @Test
+    void searchByInvalidId() {
+        assertThrows(IllegalArgumentException.class,
+                () -> {
+                    Observation search = observations.getById(-1);
+                });
     }
 }
