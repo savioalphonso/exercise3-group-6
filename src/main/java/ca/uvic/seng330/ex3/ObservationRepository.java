@@ -35,22 +35,16 @@ public class ObservationRepository implements Repository<Observation> {
         Observation key = new Observation();
         key.setSightingTime(date);
 
-        int index = Collections.binarySearch(sortedObservations, key, byDate);
+        int lower_bound = Collections.binarySearch(sortedObservations, key, byDate);
 
-        if (index >= 0){
-            Observation cur;
-            while (true){
-                try {
-                    cur = sortedObservations.get(index);
-                }catch (Exception e){
-                    break;
-                }
-                if(byDate.compare(key, cur) == 0) {
-                    result.add(new Observation(cur));
-                    index++;
-                }else{
-                    break;
-                }
+        if (lower_bound >= 0){
+            int upper_bound = lower_bound + 1;
+            Observation cur = new Observation(key);
+
+            while (key.compareTo(cur) == 0){
+                cur = sortedObservations.get(upper_bound);
+                result.add(new Observation(cur));
+                upper_bound++;
             }
         } else {
             throw new NoSuchElementException("No Observations dated: " + date.toString());
@@ -60,8 +54,15 @@ public class ObservationRepository implements Repository<Observation> {
     }
 
     public void sortByDate(){
-        observations =  getSortedList(new Observation.compareByDate());
+        if(observations != null && observations.size() > 0)
+            observations =  getSortedList(new Observation.compareByDate());
     }
+
+    public void sortById(){
+        if(observations != null && observations.size() > 0)
+            Collections.sort(observations);
+    }
+
 
     private List<Observation> getSortedList(Comparator<Observation> comparator){
         List<Observation> sortedObservations = new ArrayList<>(observations);
