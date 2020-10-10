@@ -14,8 +14,7 @@ public class LocationObservation extends SimpleObservation{
      * @return Location field variable
      */
     public Location getLocation() {
-        System.out.println("Getting Location");
-        return null;
+        return location;
     }
 
     /**
@@ -24,6 +23,7 @@ public class LocationObservation extends SimpleObservation{
      */
     public void setLocation(Location location) {
         System.out.println("Setting Location");
+        this.location = location;
     }
 
     /**

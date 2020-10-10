@@ -15,6 +15,7 @@ public class Whale implements Comparable<Whale> {
         this.name = name;
         this.color = color;
         this.species = species;
+        this.gender = gender;
 
         System.out.println("Created Whale \"" + name + "\"");
     }
@@ -149,18 +150,6 @@ public class Whale implements Comparable<Whale> {
     static class CompareById implements Comparator<Whale> {
         public int compare(Whale whale1, Whale whale2) {
             return (int) (whale1.getWhaleId() - whale2.getWhaleId());
-        }
-    }
-
-    /**
-     * Nested Comparator class for whales to compare by Species
-     *
-     * @param whale1, whale2 Whale's to be compared
-     * @return int Representing how the whale's Species compare
-     */
-    static class CompareBySpecies implements Comparator<Whale> {
-        public int compare(Whale whale1, Whale whale2) {
-            return whale1.getSpecies().compareTo(whale2.getSpecies());
         }
     }
 }
