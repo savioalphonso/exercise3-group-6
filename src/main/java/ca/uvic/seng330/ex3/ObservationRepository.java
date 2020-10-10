@@ -21,7 +21,7 @@ public class ObservationRepository implements Repository<Observation> {
     }
 
     /**
-     * Fina all the observations on a certain date
+     * Find all the observations on a certain date
      *
      * @param date - desired date of any given observation
      * @return collection of observations submitted on the date <code>date</code>
@@ -31,32 +31,17 @@ public class ObservationRepository implements Repository<Observation> {
         if (date == null)
             throw new NullPointerException();
 
-        Comparator<Observation> dateComparator = new Observation.compareByDate();
-        List<Observation> sortedObservations = new ArrayList<>(observations);
-        sortedObservations.sort(dateComparator);
-
         List<Observation> result = new ArrayList<>();
 
-        Observation key = new Observation();
-        key.setSightingTime(date);
-
-        int index = Collections.binarySearch(sortedObservations, key, dateComparator);
-        if (index < 0) {
-            throw new NoSuchElementException("No Observations dated: " + date.toString());
-        } else {
-            int startIndex = index;
-            int endIndex = index;
-
-            while (startIndex > 0 && dateComparator.compare(key, sortedObservations.get(startIndex - 1)) == 0) {
-                startIndex--;
-            }
-            while (endIndex < sortedObservations.size() - 1 && dateComparator.compare(key, sortedObservations.get(endIndex + 1)) == 0) {
-                endIndex++;
-            }
-            for (Observation current : sortedObservations.subList(startIndex, endIndex + 1)) {
-                result.add(new Observation(current));
+        for (Observation obs: observations) {
+            if (obs.getSightingTime().compareTo(date) == 0) {
+                result.add(new Observation(obs));
             }
         }
+
+        if (result.size() == 0)
+            throw new NoSuchElementException("No Observations dated: " + date.toString());
+
         return result;
     }
 
