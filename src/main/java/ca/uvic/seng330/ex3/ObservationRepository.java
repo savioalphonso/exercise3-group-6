@@ -21,7 +21,7 @@ public class ObservationRepository implements Repository<Observation> {
     }
 
     /**
-     * Fina all the observations on a certain date
+     * Find all the observations on a certain date
      *
      * @param date - desired date of any given observation
      * @return collection of observations submitted on the date <code>date</code>
