@@ -1,12 +1,15 @@
-package ca.uvic.seng330.ex2;
+package ca.uvic.seng330.ex3;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.concurrent.Callable;
 
 /**
  * Whale observation details and associated methods
  */
-public class Observation {
+public class Observation implements Comparable<Observation> {
 
-    private Reporter reporter;
+    private User reporter;
     private long observationId;
     private Date sightingTime;
     private Species species;
@@ -29,34 +32,32 @@ public class Observation {
      * Get Reporter of Observation
      * @return reporter - Reporter of Observation
      */
-    public Reporter getReporter() {
-        System.out.println("Getting Reporter");
-        return null;
+    public User getReporter() {
+        return reporter;
     }
 
     /**
      * Set Reporter of Observation
      * @param reporter - Reporter of Observation
      */
-    public void setReporter(Reporter reporter) {
-        System.out.println("Setting Reporter");
+    public void setReporter(User reporter) {
+        this.reporter = reporter;
     }
 
     /**
      * Get ObservationId of Observation
-     * @return int - ObservationId number
+     * @return long - ObservationId number
      */
-    public int getObservationId() {
-        System.out.println("Getting Observation Id");
-        return 0;
+    public long getObservationId() {
+        return observationId;
     }
 
     /**
      * Set ObservationId of Observation
      * @param observationId - ObservationId number
      */
-    public void setObservationId(int observationId) {
-        System.out.println("Setting Observation Id");
+    public void setObservationId(long observationId) {
+        this.observationId = observationId;
     }
 
     /**
@@ -64,8 +65,7 @@ public class Observation {
      * @return Date - sightingTime date
      */
     public Date getSightingTime() {
-        System.out.println("Getting Sighting Time");
-        return null;
+        return sightingTime;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Observation {
      * @param sightingTime - date of Observation
      */
     public void setSightingTime(Date sightingTime) {
-        System.out.println("Setting Sighting Time");
+        this.sightingTime = sightingTime;
     }
 
     /**
@@ -81,8 +81,7 @@ public class Observation {
      * @return species - Species of whale observed
      */
     public Species getSpecies() {
-        System.out.println("Getting Species");
-        return null;
+        return species;
     }
 
     /**
@@ -90,7 +89,7 @@ public class Observation {
      * @param species - Species of whale observed
      */
     public void setSpecies(Species species) {
-        System.out.println("Setting Species");
+        this.species = species;
     }
 
     /**
@@ -98,8 +97,7 @@ public class Observation {
      * @return direction - Direction of observed whale movement
      */
     public Direction getDirection() {
-        System.out.println("Getting Direction");
-        return null;
+        return direction;
     }
 
     /**
@@ -107,7 +105,7 @@ public class Observation {
      * @param direction - Direction of observed whale movement
      */
     public void Direction(Direction direction) {
-        System.out.println("Setting Direction");
+        this.direction = direction;
     }
 
     /**
@@ -115,8 +113,7 @@ public class Observation {
      * @return condition - Condition of whale(s) observed
      */
     public String getConditions() {
-        System.out.println("Getting Conditions");
-        return null;
+        return conditions;
     }
 
     /**
@@ -124,7 +121,7 @@ public class Observation {
      * @param conditions - Condition of whale(s) observed
      */
     public void setConditions(String conditions) {
-        System.out.println("Setting Conditions");
+        this.conditions = conditions;
     }
 
     /**
@@ -133,7 +130,7 @@ public class Observation {
      */
     public Observation(Observation other){
         if(other != null){
-            this.reporter = new Reporter(other.reporter);
+            this.reporter = new User(other.reporter);
             this.observationId = other.observationId;
             this.sightingTime = new Date(other.sightingTime.getTime());
             this.species = other.species;
@@ -142,14 +139,41 @@ public class Observation {
         }
     }
 
-    public Observation(long id, Reporter reporter, Date time, Species species, Direction direction, String conditions){
-        this.reporter = new Reporter(reporter);
+    public Observation(long id, User reporter, Date time, Species species, Direction direction, String conditions){
+        this.reporter = new User(reporter);
         this.observationId = id;
         this.sightingTime = new Date(time.getTime());
         this.species = species;
         this.direction = direction;
         this.conditions = conditions;
+    }
 
-        System.out.print("Observed a whale");
+    /**
+     * Compares two Observation objects by their id
+     * @param other Observation to compare this to
+     * @return 0 if equal, <0 less than and >0 if greater than</0>
+     */
+    @Override
+    public int compareTo(Observation other) {
+
+        if (other == null)
+            throw new NullPointerException();
+
+        return (int) (observationId - other.observationId);
+    }
+
+
+    /**
+     * Compares Observation by date
+     */
+    static class compareByDate implements Comparator<Observation> {
+        public int compare(Observation obs1, Observation obs2) {
+
+            if (obs1 == null || obs2 == null || obs1.sightingTime == null || obs2.sightingTime == null)
+                throw new NullPointerException();
+
+            return  obs1.sightingTime.compareTo(obs2.sightingTime);
+
+        }
     }
 }

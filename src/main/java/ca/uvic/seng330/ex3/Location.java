@@ -1,4 +1,4 @@
-package ca.uvic.seng330.ex2;
+package ca.uvic.seng330.ex3;
 
 /**
  * Location details and associated methods
@@ -22,7 +22,7 @@ public class Location {
      */
     public double getLatitude() {
         System.out.println("Getting Latitude");
-        return 0;
+        return latitude;
     }
 
 
@@ -32,7 +32,7 @@ public class Location {
      */
     public double getLongitude() {
         System.out.println("Getting Longitude");
-        return 0;
+        return longitude;
     }
 
 

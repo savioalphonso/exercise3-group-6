@@ -1,4 +1,4 @@
-package ca.uvic.seng330.ex2;
+package ca.uvic.seng330.ex3;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * Collection of objects with a species and and id
  * @param <T> Any object with a species and id field variable
  */
-public interface Repository<T>{
+public interface Repository<T> extends Iterable<T>{
     /**
      * Get a collection of objects that matches the species parameter
      * @param species - species of the desired object
@@ -19,7 +19,7 @@ public interface Repository<T>{
      * @param id - id of the specific desired object
      * @return specific instance of an object that matches id parameter
      */
-    T getById(int id);
+    T getById(long id);
 
     /**
      * Add an object into the collection

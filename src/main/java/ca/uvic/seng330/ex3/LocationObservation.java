@@ -1,4 +1,4 @@
-package ca.uvic.seng330.ex2;
+package ca.uvic.seng330.ex3;
 
 import java.util.Date;
 
@@ -14,8 +14,7 @@ public class LocationObservation extends SimpleObservation{
      * @return Location field variable
      */
     public Location getLocation() {
-        System.out.println("Getting Location");
-        return null;
+        return location;
     }
 
     /**
@@ -24,6 +23,7 @@ public class LocationObservation extends SimpleObservation{
      */
     public void setLocation(Location location) {
         System.out.println("Setting Location");
+        this.location = location;
     }
 
     /**
@@ -42,8 +42,8 @@ public class LocationObservation extends SimpleObservation{
         this.location = null;
     }
 
-    public LocationObservation(long id, Reporter reporter, Date time, Species species, Direction direction, String conditions, String notes, Location location){
-        super(id, reporter, time, species, direction, conditions, notes);
+    public LocationObservation(long id, User user, Date time, Species species, Direction direction, String conditions, String notes, Location location){
+        super(id, user, time, species, direction, conditions, notes);
         this.location = new Location(location);
 
         System.out.print("at a location\n");

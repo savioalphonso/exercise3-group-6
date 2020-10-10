@@ -1,4 +1,4 @@
-package ca.uvic.seng330.ex2;
+package ca.uvic.seng330.ex3;
 
 import java.util.Date;
 
@@ -36,7 +36,7 @@ public class SimpleObservation extends Observation{
         }
     }
 
-    public SimpleObservation(long id, Reporter reporter, Date time, Species species, Direction direction, String conditions, String notes){
+    public SimpleObservation(long id, User reporter, Date time, Species species, Direction direction, String conditions, String notes){
         super(id, reporter, time, species, direction, conditions);
         this.notes = notes;
         System.out.print(", they noted: \"" + notes + "\" ");
