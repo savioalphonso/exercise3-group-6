@@ -3,31 +3,38 @@
  */
 package ca.uvic.seng330.ex3;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ObservationTests {
+
+    private List<Observation> unorderedList;
     private ObservationRepository observations;
+
     private Observation observation1;
+    private Observation otherObservation1;
     private Observation observation2;
     private Observation observation3;
     private Observation observation4;
 
     @BeforeEach
-    void before() {
+    void initalizeData() {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
+
+
+
         try {
+            otherObservation1 = new Observation();
+            otherObservation1.setObservationId(1);
             observation1 = new Observation();
             observation1.setSightingTime(format.parse("2020-10-01")); //2020-10-1
             observation1.setObservationId(1);
@@ -43,15 +50,57 @@ class ObservationTests {
         } catch (Exception e) {
             fail();
         }
-        List<Observation> list = new ArrayList<>();
-        list.add(observation1);
-        list.add(observation3);
-        list.add(observation2);
-        list.add(observation4);
+        unorderedList = new ArrayList<>();
+        unorderedList.add(observation1);
+        unorderedList.add(observation3);
+        unorderedList.add(observation2);
+        unorderedList.add(observation4);
 
-        observations = new ObservationRepository(list);
+        observations = new ObservationRepository(unorderedList);
 
     }
+
+    @Test
+    void testObservationCompareTo(){
+        int isSame = observation1.compareTo(otherObservation1);
+        int ob2IsGreaterob1 = observation2.compareTo(observation1);
+        int ob1IsLessob2 = observation1.compareTo(observation2);
+
+        assertEquals(isSame, 0);
+        assertTrue(ob2IsGreaterob1 > 0);
+        assertTrue(ob1IsLessob2 < 0);
+    }
+
+    @Test
+    void testObservationComparator(){
+        Comparator<Observation> byDate = new Observation.compareByDate();
+
+        int isSame = byDate.compare(observation1, observation2);
+        int ob2IsGreaterOb1 = byDate.compare(observation2, observation1);
+        int ob1IsLessOb2 = byDate.compare(observation1, observation2);
+
+        assertEquals(isSame, 0);
+        assertTrue(ob2IsGreaterOb1 > 0);
+        assertTrue(ob1IsLessOb2 < 0);
+    }
+
+    @Test
+    void testObservationDateComparatorTimeInsensitive(){
+        Comparator<Observation> byDate = new Observation.compareByDate();
+        Observation ob1 = new Observation();
+        Observation ob2 = new Observation();
+
+        long d1 = 1602325830; //2020-10-10 3:30:30am
+        long d2 = 1602333030; //2020-10-10 5:30:30am
+
+        ob1.setSightingTime(new Date(d1));
+        ob2.setSightingTime(new Date(d2));
+
+        int isSame = byDate.compare(ob1, ob2);
+        assertEquals(isSame, 0);
+    }
+
+
 
     @Test
     void sortObservationRepositoryByDate() {
@@ -66,42 +115,29 @@ class ObservationTests {
 
     @Test
     void sortEmptyObservationRepositoryByDate() {
-        // Test for empty observations collection
         ObservationRepository observations = new ObservationRepository();
-        try {
-            observations.sortByDate();
-        } catch (Exception e) {
-            fail();
-        }
+        Assertions.assertDoesNotThrow(observations::sortByDate);
     }
 
     @Test
     void sortObservationRepositoryById() {
-        List<Observation> list = new ArrayList<>();
-        list.add(observation1);
-        list.add(observation2);
-        list.add(observation3);
-        list.add(observation4);
-        observations.sortById();
-        assertEquals(list, observations.getObservations());
+        List<Observation> expectedList = new ArrayList<>();
+        expectedList.add(observation1);
+        expectedList.add(observation2);
+        expectedList.add(observation3);
+        expectedList.add(observation4);
 
-        List<Observation> list2 = new ArrayList<>();
-        list2.add(observation1);
-        list2.add(observation3);
-        list2.add(observation4);
-        list2.add(observation2);
-        assertNotEquals(list2, observations.getObservations());
+        observations.sortById();
+
+        assertEquals(expectedList, observations.getObservations());
+        assertNotEquals(unorderedList, observations.getObservations());
     }
 
     @Test
     void sortEmptyObservationRepositoryById() {
         // Test for empty observations collection
         ObservationRepository observations = new ObservationRepository();
-        try {
-            observations.sortById();
-        } catch (Exception e) {
-            fail();
-        }
+        Assertions.assertDoesNotThrow(observations::sortById);
     }
 
     @Test
@@ -109,42 +145,37 @@ class ObservationTests {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = format.parse("2020-09-01");
 
-        List<Observation> search = new ArrayList<>();
+        List<Observation> result = new ArrayList<>();
         try {
-            search = observations.getByDate(date);
+            result = observations.getByDate(date);
         } catch (Exception e) {
             fail();
         }
-        assertEquals(1, search.size());
-        assertEquals(date, search.get(0).getSightingTime());
+
+        assertEquals(1, result.size());
+        assertEquals(date, result.get(0).getSightingTime());
     }
 
     @Test
     void searchMultipleResultsByDate() throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = format.parse("2020-09-05");
-        List<Observation> search = new ArrayList<>();
-
-        List<Observation> results = new ArrayList<>();
-        results.add(observation3);
-        results.add(observation4);
+        List<Observation> result = new ArrayList<>();
 
         try {
-            search = observations.getByDate(date);
+            result = observations.getByDate(date);
         } catch (Exception e) {
             fail();
         }
-        assertEquals(2, search.size());
-        assertEquals(date, search.get(0).getSightingTime());
-        assertEquals(date, search.get(1).getSightingTime());
+
+        assertEquals(2, result.size());
+        assertEquals(date, result.get(0).getSightingTime());
+        assertEquals(date, result.get(1).getSightingTime());
     }
 
     @Test
     void searchByInvalidDate() {
-        assertThrows(NullPointerException.class,
-                () -> {
-                    List<Observation> search = observations.getByDate(null);
-                });
+        assertThrows(NullPointerException.class,() -> observations.getByDate(null));
     }
 
     @Test
@@ -171,9 +202,6 @@ class ObservationTests {
 
     @Test
     void searchByInvalidId() {
-        assertThrows(IllegalArgumentException.class,
-                () -> {
-                    Observation search = observations.getById(-1);
-                });
+        assertThrows(IllegalArgumentException.class, () -> observations.getById(-1));
     }
 }

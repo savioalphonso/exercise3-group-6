@@ -1,6 +1,8 @@
 package ca.uvic.seng330.ex3;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.concurrent.Callable;
 
 /**
  * Whale observation details and associated methods
@@ -31,7 +33,6 @@ public class Observation implements Comparable<Observation> {
      * @return reporter - Reporter of Observation
      */
     public User getReporter() {
-        System.out.println("Getting Reporter");
         return reporter;
     }
 
@@ -41,7 +42,6 @@ public class Observation implements Comparable<Observation> {
      */
     public void setReporter(User reporter) {
         this.reporter = reporter;
-        System.out.println("Setting Reporter");
     }
 
     /**
@@ -49,7 +49,6 @@ public class Observation implements Comparable<Observation> {
      * @return long - ObservationId number
      */
     public long getObservationId() {
-        System.out.println("Getting Observation Id");
         return observationId;
     }
 
@@ -58,7 +57,6 @@ public class Observation implements Comparable<Observation> {
      * @param observationId - ObservationId number
      */
     public void setObservationId(long observationId) {
-        System.out.println("Setting Observation Id");
         this.observationId = observationId;
     }
 
@@ -67,7 +65,6 @@ public class Observation implements Comparable<Observation> {
      * @return Date - sightingTime date
      */
     public Date getSightingTime() {
-        System.out.println("Getting Sighting Time");
         return sightingTime;
     }
 
@@ -76,7 +73,6 @@ public class Observation implements Comparable<Observation> {
      * @param sightingTime - date of Observation
      */
     public void setSightingTime(Date sightingTime) {
-        System.out.println("Setting Sighting Time");
         this.sightingTime = sightingTime;
     }
 
@@ -85,7 +81,6 @@ public class Observation implements Comparable<Observation> {
      * @return species - Species of whale observed
      */
     public Species getSpecies() {
-        System.out.println("Getting Species");
         return species;
     }
 
@@ -94,7 +89,6 @@ public class Observation implements Comparable<Observation> {
      * @param species - Species of whale observed
      */
     public void setSpecies(Species species) {
-        System.out.println("Setting Species");
         this.species = species;
     }
 
@@ -103,7 +97,6 @@ public class Observation implements Comparable<Observation> {
      * @return direction - Direction of observed whale movement
      */
     public Direction getDirection() {
-        System.out.println("Getting Direction");
         return direction;
     }
 
@@ -112,7 +105,6 @@ public class Observation implements Comparable<Observation> {
      * @param direction - Direction of observed whale movement
      */
     public void Direction(Direction direction) {
-        System.out.println("Setting Direction");
         this.direction = direction;
     }
 
@@ -121,7 +113,6 @@ public class Observation implements Comparable<Observation> {
      * @return condition - Condition of whale(s) observed
      */
     public String getConditions() {
-        System.out.println("Getting Conditions");
         return conditions;
     }
 
@@ -130,7 +121,6 @@ public class Observation implements Comparable<Observation> {
      * @param conditions - Condition of whale(s) observed
      */
     public void setConditions(String conditions) {
-        System.out.println("Setting Conditions");
         this.conditions = conditions;
     }
 
@@ -156,10 +146,13 @@ public class Observation implements Comparable<Observation> {
         this.species = species;
         this.direction = direction;
         this.conditions = conditions;
-
-        System.out.print("Observed a whale");
     }
 
+    /**
+     * Compares two Observation objects by their id
+     * @param other Observation to compare this to
+     * @return 0 if equal, <0 less than and >0 if greater than</0>
+     */
     @Override
     public int compareTo(Observation other) {
 
@@ -169,9 +162,32 @@ public class Observation implements Comparable<Observation> {
         return (int) (observationId - other.observationId);
     }
 
+
+    /**
+     * Compares Observation by date, truncates any associated time while comparing.
+     */
     static class compareByDate implements Comparator<Observation> {
         public int compare(Observation obs1, Observation obs2) {
-            return obs1.getSightingTime().compareTo(obs2.getSightingTime());
+
+            if (obs1 == null || obs2 == null || obs1.sightingTime == null || obs2.sightingTime == null)
+                throw new NullPointerException();
+
+            long time1 = truncateDate(obs1.getSightingTime());
+            long time2 = truncateDate(obs2.getSightingTime());
+
+            return (int)(time1 - time2);
+
+        }
+
+        private long truncateDate(Date date){
+            Calendar cal = Calendar.getInstance(); // locale-specific
+            cal.setTime(date);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+
+            return cal.getTimeInMillis();
         }
     }
 }
