@@ -164,7 +164,7 @@ public class Observation implements Comparable<Observation> {
 
 
     /**
-     * Compares Observation by date, truncates any associated time while comparing.
+     * Compares Observation by date
      */
     static class compareByDate implements Comparator<Observation> {
         public int compare(Observation obs1, Observation obs2) {
