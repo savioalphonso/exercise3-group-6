@@ -172,22 +172,8 @@ public class Observation implements Comparable<Observation> {
             if (obs1 == null || obs2 == null || obs1.sightingTime == null || obs2.sightingTime == null)
                 throw new NullPointerException();
 
-            long time1 = truncateDate(obs1.getSightingTime());
-            long time2 = truncateDate(obs2.getSightingTime());
+            return  obs1.sightingTime.compareTo(obs2.sightingTime);
 
-            return (int)(time1 - time2);
-
-        }
-
-        private long truncateDate(Date date){
-            Calendar cal = Calendar.getInstance(); // locale-specific
-            cal.setTime(date);
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MILLISECOND, 0);
-
-            return cal.getTimeInMillis();
         }
     }
 }

@@ -35,6 +35,7 @@ class ObservationTests {
         try {
             otherObservation1 = new Observation();
             otherObservation1.setObservationId(1);
+            otherObservation1.setSightingTime(format.parse("2020-10-01")); //2020-10-1
             observation1 = new Observation();
             observation1.setSightingTime(format.parse("2020-10-01")); //2020-10-1
             observation1.setObservationId(1);
@@ -63,43 +64,26 @@ class ObservationTests {
     @Test
     void testObservationCompareTo(){
         int isSame = observation1.compareTo(otherObservation1);
-        int ob2IsGreaterob1 = observation2.compareTo(observation1);
-        int ob1IsLessob2 = observation1.compareTo(observation2);
+        int greater = observation2.compareTo(observation1);
+        int less = observation1.compareTo(observation2);
 
-        assertEquals(isSame, 0);
-        assertTrue(ob2IsGreaterob1 > 0);
-        assertTrue(ob1IsLessob2 < 0);
+        assertEquals(0, isSame);
+        assertTrue(greater > 0);
+        assertTrue(less < 0);
     }
 
     @Test
     void testObservationComparator(){
         Comparator<Observation> byDate = new Observation.compareByDate();
 
-        int isSame = byDate.compare(observation1, observation2);
-        int ob2IsGreaterOb1 = byDate.compare(observation2, observation1);
-        int ob1IsLessOb2 = byDate.compare(observation1, observation2);
+        int isSame = byDate.compare(observation1, otherObservation1);
+        int greater = byDate.compare(observation1, observation2);
+        int less = byDate.compare(observation2, observation1);
 
-        assertEquals(isSame, 0);
-        assertTrue(ob2IsGreaterOb1 > 0);
-        assertTrue(ob1IsLessOb2 < 0);
+        assertEquals(0,isSame);
+        assertTrue(greater > 0);
+        assertTrue(less < 0);
     }
-
-    @Test
-    void testObservationDateComparatorTimeInsensitive(){
-        Comparator<Observation> byDate = new Observation.compareByDate();
-        Observation ob1 = new Observation();
-        Observation ob2 = new Observation();
-
-        long d1 = 1602325830; //2020-10-10 3:30:30am
-        long d2 = 1602333030; //2020-10-10 5:30:30am
-
-        ob1.setSightingTime(new Date(d1));
-        ob2.setSightingTime(new Date(d2));
-
-        int isSame = byDate.compare(ob1, ob2);
-        assertEquals(isSame, 0);
-    }
-
 
 
     @Test
